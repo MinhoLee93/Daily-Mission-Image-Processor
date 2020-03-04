@@ -1,0 +1,129 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.9.RELEASE'
+        querydslPluginVersion = '1.0.10'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" } // plugin 저장소
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.dailymission.api'
+version = '0.0.1-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    // jojuldu
+    jcenter()
+    // AWS
+    maven { url 'https://repo.spring.io/libs-milestone'}
+}
+
+dependencies {
+    //mariadb
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    // web
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    // lombok
+    compile 'org.projectlombok:lombok'
+    // jpa
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // h2
+    testCompile 'com.h2database:h2'
+    runtime 'com.h2database:h2'
+    
+    // test auth
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.security:spring-security-test'
+
+    // annotation processor
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // querydsl
+    compile 'com.querydsl:querydsl-apt'
+    compile 'com.querydsl:querydsl-jpa'
+
+    testCompile 'com.querydsl:querydsl-apt'
+    testCompile 'com.querydsl:querydsl-jpa'
+
+    // devtool
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // gson dependency
+    compile 'com.google.code.gson:gson'
+
+    // log4j
+    compile group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+    // AWS
+    compile 'org.springframework.cloud:spring-cloud-starter-aws'
+    
+    // rabbitmq
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Test.class" // whatever Ant pattern matches your test class files
+}
+
+// querydsl 적용
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+def querydslSrcDir = 'src/main/generated'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+ext {
+    gradleVersion= '4.10.2'
+}
+
+wrapper {
+    gradleVersion = "$gradleVersion"
+}
+
+// AWS
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-aws:2.0.0.RC2'
+    }
+}
