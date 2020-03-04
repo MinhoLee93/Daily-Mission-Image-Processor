@@ -62,25 +62,21 @@ public class Mission extends BaseTimeEntity {
     @Column(name="IMAGE_URL", nullable = false)
     private String imageUrl;
 
-        // 썸네일 (홈)
-    @Column(name="THUMBNAIL_URL", nullable = false)
-    private String thumbnailUrl;
+    // 썸네일 (홈)
+    @Column(name="THUMBNAIL_URL_HOME", nullable = false)
+    private String thumbnailUrlHome;
 
-//    // 썸네일 (홈)
-//    @Column(name="THUMBNAIL_URL_HOME", nullable = false)
-//    private String thumbnailUrlHome;
+    // 썸네일 (전체)
+    @Column(name="THUMBNAIL_URL_ALL", nullable = false)
+    private String thumbnailUrlAll;
 
-//    // 썸네일 (전체)
-//    @Column(name="THUMBNAIL_URL_ALL", nullable = false)
-//    private String thumbnailUrlAll;
-//
-//    // 썸네일 (Hot)
-//    @Column(name="THUMBNAIL_URL_HOT", nullable = false)
-//    private String thumbnailUrlHot;
-//
-//    // 썸네일 (디테일)
-//    @Column(name="THUMBNAIL_URL_DETAIL", nullable = false)
-//    private String thumbnailUrlDetail;
+    // 썸네일 (Hot)
+    @Column(name="THUMBNAIL_URL_HOT", nullable = false)
+    private String thumbnailUrlHot;
+
+    // 썸네일 (디테일)
+    @Column(name="THUMBNAIL_URL_DETAIL", nullable = false)
+    private String thumbnailUrlDetail;
 
     @Column(name = "CREDENTIAL", nullable = false)
     private String credential;
@@ -117,11 +113,10 @@ public class Mission extends BaseTimeEntity {
 
         // s3
         this.imageUrl = imageUrl;
-        this.thumbnailUrl = imageUrl;
-//        this.thumbnailUrlHome = imageUrl;
-//        this.thumbnailUrlAll = imageUrl;
-//        this.thumbnailUrlHot = imageUrl;
-//        this.thumbnailUrlDetail = imageUrl;
+        this.thumbnailUrlHome = imageUrl;
+        this.thumbnailUrlAll = imageUrl;
+        this.thumbnailUrlHot = imageUrl;
+        this.thumbnailUrlDetail = imageUrl;
 
         this.ended = false;
         this.deleted = false;
@@ -164,7 +159,7 @@ public class Mission extends BaseTimeEntity {
 
     // 종료날짜 확인 (Mission Create)
     public boolean checkEndDate(LocalDate date){
-        if(date.isAfter(this.startDate)){
+        if(date.isAfter(this.endDate)){
             return false;
         }else{
             return true;
@@ -176,32 +171,31 @@ public class Mission extends BaseTimeEntity {
         // 이미지
         this.imageUrl = imageUrl;
         // 썸네일 -> 재생성
-        this.thumbnailUrl = imageUrl;
-//        this.thumbnailUrlHome = imageUrl;
-//        this.thumbnailUrlAll = imageUrl;
-//        this.thumbnailUrlHot = imageUrl;
-//        this.thumbnailUrlDetail = imageUrl;
+        this.thumbnailUrlHome = imageUrl;
+        this.thumbnailUrlAll = imageUrl;
+        this.thumbnailUrlHot = imageUrl;
+        this.thumbnailUrlDetail = imageUrl;
     }
 
-//    // 썸네일 업데이트 (홈)
-//    public void updateThumbnailHome(String thumbnailUrlHome){
-//        this.thumbnailUrlHome = thumbnailUrlHome;
-//    }
-//
-//    // 썸네일 업데이트 (ALL)
-//    public void updateThumbnailAll(String thumbnailUrlAll){
-//        this.thumbnailUrlAll = thumbnailUrlAll;
-//    }
-//
-//    // 썸네일 업데이트 (Hot)
-//    public void updateThumbnailHot(String thumbnailUrlHot){
-//        this.thumbnailUrlHot = thumbnailUrlHot;
-//    }
-//
-//    // 썸네일 업데이트 (Detail)
-//    public void updateThumbnailDetail(String thumbnailUrlDetail){
-//        this.thumbnailUrlDetail = thumbnailUrlDetail;
-//    }
+    // 썸네일 업데이트 (홈)
+    public void updateThumbnailHome(String thumbnailUrlHome){
+        this.thumbnailUrlHome = thumbnailUrlHome;
+    }
+
+    // 썸네일 업데이트 (ALL)
+    public void updateThumbnailAll(String thumbnailUrlAll){
+        this.thumbnailUrlAll = thumbnailUrlAll;
+    }
+
+    // 썸네일 업데이트 (Hot)
+    public void updateThumbnailHot(String thumbnailUrlHot){
+        this.thumbnailUrlHot = thumbnailUrlHot;
+    }
+
+    // 썸네일 업데이트 (Detail)
+    public void updateThumbnailDetail(String thumbnailUrlDetail){
+        this.thumbnailUrlDetail = thumbnailUrlDetail;
+    }
 
     // 업데이트
     public void update(MissionRule missionRule, String title, String content, LocalDate startDate, LocalDate endDate) {
@@ -231,21 +225,4 @@ public class Mission extends BaseTimeEntity {
         this.ended = true;
     }
 
-
-//    // 미션 참여 유저 목록 (강퇴여부 포함 / 스케줄 왼쪽)
-//    public List<MissionUserListResponseDto> getAllUser(){
-//        List<MissionUserListResponseDto> allUser = new ArrayList<>();
-//
-//        for(Participant p : this.participants){
-//            MissionUserListResponseDto user = MissionUserListResponseDto.builder()
-//                    .userId(p.getUser().getId())
-//                    .userName(p.getUser().getName())
-//                    .banned(p.isBanned())
-//                    .build();
-//
-//            allUser.add(user);
-//        }
-//
-//        return allUser;
-//    }
 }

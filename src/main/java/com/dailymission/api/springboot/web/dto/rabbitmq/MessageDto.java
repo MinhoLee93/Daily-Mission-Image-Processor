@@ -13,16 +13,18 @@ public class MessageDto {
     private String fileName;
     private String extension;
     private String keyName;
+    private String originalFileName;
     private String imageUrl;
 
     @Builder
-    public MessageDto(Long id, String type, String dirName, String fileName, String extension, String keyName, String imageUrl){
+    public MessageDto(Long id, String type, String dirName, String fileName, String extension, String keyName, String originalFileName, String imageUrl){
         this.id = id;
         this.type =type;
         this.dirName = dirName;
         this.fileName = fileName;
         this.extension = extension;
         this.keyName = keyName;
+        this.originalFileName = originalFileName;
         this.imageUrl = imageUrl;
     }
 }
