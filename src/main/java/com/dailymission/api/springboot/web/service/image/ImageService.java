@@ -75,7 +75,7 @@ public class ImageService {
         // remove download file
         s3Util.removeNewFile(download);
 
-        Optional<Mission> optional = missionRepository.findById(messageDto.getId());
+        Optional<Mission> optional = missionRepository.findById(messageDto.getMissionId());
         if (optional.isPresent()) {
             // get mission object
             Mission mission = optional.get();
@@ -102,7 +102,7 @@ public class ImageService {
         // remove download file
         s3Util.removeNewFile(download);
 
-        Optional<Post> optional = postRepository.findById(messageDto.getId());
+        Optional<Post> optional = postRepository.findById(messageDto.getPostId());
         if (optional.isPresent()) {
             // get mission object
             Post post = optional.get();
