@@ -14,14 +14,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /*
-* Let’s now create the Entity classes of our application.
-* Following is the definition of the User class -
-* */
+ * Let’s now create the Entity classes of our application.
+ * Following is the definition of the User class -
+ * */
 @Getter
 @Setter
 @Entity
@@ -29,7 +30,7 @@ import java.util.List;
         @UniqueConstraint(columnNames = "email")
 })
 @NoArgsConstructor
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +44,14 @@ public class User extends BaseTimeEntity {
     private String email;
 
     private String imageUrl;
+
+    private String thumbnailUrl;
+
+    @Column(name = "ORIGINAL_FILE_NAME")
+    private String originalFileName;
+
+    @Column(name = "FILE_EXTENSION")
+    private String fileExtension;
 
     @Column(nullable = false)
     private Boolean emailVerified = false;
@@ -75,5 +84,18 @@ public class User extends BaseTimeEntity {
         this.imageUrl = imageUrl;
         this.provider = provider;
         this.providerId = providerId;
+    }
+
+    // 이미지 업데이트
+    public void updateImage(String imageUrl){
+        // 이미지
+        this.imageUrl = imageUrl;
+        // 썸네일 -> 재생성
+        this.thumbnailUrl = imageUrl;
+    }
+
+    // 썸네일 업데이트
+    public void updateThumbnail(String thumbnailUrl){
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

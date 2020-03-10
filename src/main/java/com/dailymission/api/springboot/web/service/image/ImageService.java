@@ -6,6 +6,8 @@ import com.dailymission.api.springboot.web.repository.mission.Mission;
 import com.dailymission.api.springboot.web.repository.mission.MissionRepository;
 import com.dailymission.api.springboot.web.repository.post.Post;
 import com.dailymission.api.springboot.web.repository.post.PostRepository;
+import com.dailymission.api.springboot.web.repository.user.User;
+import com.dailymission.api.springboot.web.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,7 @@ public class ImageService {
     private final S3Util s3Util;
     private final MissionRepository missionRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     public String genDir(){
         // get calendar instance
@@ -104,13 +107,37 @@ public class ImageService {
 
         Optional<Post> optional = postRepository.findById(messageDto.getPostId());
         if (optional.isPresent()) {
-            // get mission object
+            // get post object
             Post post = optional.get();
 
             // update thumbnail url
             post.updateThumbnail(resize_400_880_url);
 
             postRepository.save(post);
+        }
+    }
+
+    public void resizeUser(MessageDto messageDto) throws IOException {
+        // download file
+        File download = s3Util.download(messageDto);
+        Image image = ImageIO.read(download);
+
+        // resize 40x40 (리스트)
+        File resize_40_40 = s3Util.resize(messageDto, image, 40, 40, "W");
+        String resize_40_40_url =  s3Util.upload(resize_40_40, messageDto.getDirName()).getImageUrl();
+
+        // remove download file
+        s3Util.removeNewFile(download);
+
+        Optional<User> optional = userRepository.findById(messageDto.getUserId());
+        if (optional.isPresent()) {
+            // get user object
+            User user = optional.get();
+
+            // update thumbnail url
+            user.updateThumbnail(resize_40_40_url);
+
+            userRepository.save(user);
         }
     }
 }

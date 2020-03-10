@@ -3,6 +3,7 @@ package com.dailymission.api.springboot.web.dto.rabbitmq;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +20,7 @@ public class MessageDto {
     private String imageUrl;
 
     @Builder
-    public MessageDto(Long userId, Long missionId, long postId, String type, String dirName, String fileName, String extension, String keyName, String originalFileName, String imageUrl){
+    public MessageDto(Long userId, Long missionId, Long postId, String type, String dirName, String fileName, String extension, String keyName, String originalFileName, String imageUrl){
         this.userId = userId;
         this.missionId = missionId;
         this.postId = postId;

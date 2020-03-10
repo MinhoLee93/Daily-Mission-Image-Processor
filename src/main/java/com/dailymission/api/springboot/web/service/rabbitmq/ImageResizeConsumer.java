@@ -57,4 +57,18 @@ public class ImageResizeConsumer {
         // resize mission
         imageService.resizePost(message);
     }
+
+
+    @RabbitListener(queues = "q.resize.user")
+    @Caching(evict = {
+            // 유저 정보
+            @CacheEvict(value = "users", key = "#message.userId"),
+    })
+    public void resizeUser(MessageDto message) throws IOException {
+
+        System.out.println(">>>>>>>>>>>>> resize user");
+
+        // resize mission
+        imageService.resizeUser(message);
+    }
 }
