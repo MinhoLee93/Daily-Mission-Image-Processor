@@ -95,7 +95,8 @@ public class S3Util {
             String postFix = "_" + newHeight + "_" + newWidth;
             int imageHeight;
             int imageWidth;
-            double ratio;
+            double hRatio;
+            double wRatio;
             int h;
             int w;
 
@@ -103,19 +104,22 @@ public class S3Util {
                 imageHeight = image.getHeight(null);
                 imageWidth = image.getWidth(null);
 
-                if(position.equals("W")){
-                    ratio = (double) newWidth / (double) imageWidth;
-                    h = (int) (imageHeight * ratio);
-                    w = (int) (imageWidth * ratio);
-                }else {
-                    // "H"
-                    ratio = (double) newHeight / (double) imageHeight;
-                    h = (int) (imageHeight * ratio);
-                    w = (int) (imageWidth * ratio);
-                }
+//                if(position.equals("W")){
+                hRatio = (double) newHeight / (double) imageHeight;
+                wRatio = (double) newWidth / (double) imageWidth;
+
+                h = (int) (imageHeight * hRatio);
+                w = (int) (imageWidth * wRatio);
+
+//                }else {
+//                    // "H"
+//                    ratio = (double) newHeight / (double) imageHeight;
+//                    h = (int) (imageHeight * ratio);
+//                    w = (int) (imageWidth * ratio);
+//                }
 
                 // resize
-                Image resizeImage = image.getScaledInstance(w, h, Image.SCALE_FAST);
+                Image resizeImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 
                 // new image
                 BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
