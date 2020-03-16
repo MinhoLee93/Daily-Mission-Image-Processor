@@ -62,17 +62,17 @@ public class Mission extends BaseTimeEntity {
     @Column(name="IMAGE_URL", nullable = false)
     private String imageUrl;
 
-    // 썸네일 (홈)
-    @Column(name="THUMBNAIL_URL_HOME", nullable = false)
-    private String thumbnailUrlHome;
-
-    // 썸네일 (전체)
-    @Column(name="THUMBNAIL_URL_ALL", nullable = false)
-    private String thumbnailUrlAll;
-
     // 썸네일 (Hot)
     @Column(name="THUMBNAIL_URL_HOT", nullable = false)
     private String thumbnailUrlHot;
+
+    // 썸네일 (New)
+    @Column(name="THUMBNAIL_URL_New", nullable = false)
+    private String thumbnailUrlNew;
+
+    // 썸네일 (All)
+    @Column(name="THUMBNAIL_URL_ALL", nullable = false)
+    private String thumbnailUrlAll;
 
     // 썸네일 (디테일)
     @Column(name="THUMBNAIL_URL_DETAIL", nullable = false)
@@ -113,7 +113,7 @@ public class Mission extends BaseTimeEntity {
 
         // s3
         this.imageUrl = imageUrl;
-        this.thumbnailUrlHome = imageUrl;
+        this.thumbnailUrlNew = imageUrl;
         this.thumbnailUrlAll = imageUrl;
         this.thumbnailUrlHot = imageUrl;
         this.thumbnailUrlDetail = imageUrl;
@@ -171,15 +171,15 @@ public class Mission extends BaseTimeEntity {
         // 이미지
         this.imageUrl = imageUrl;
         // 썸네일 -> 재생성
-        this.thumbnailUrlHome = imageUrl;
+        this.thumbnailUrlNew = imageUrl;
         this.thumbnailUrlAll = imageUrl;
         this.thumbnailUrlHot = imageUrl;
         this.thumbnailUrlDetail = imageUrl;
     }
 
     // 썸네일 업데이트 (홈)
-    public void updateThumbnailHome(String thumbnailUrlHome){
-        this.thumbnailUrlHome = thumbnailUrlHome;
+    public void updateThumbnailNew(String thumbnailUrlNew){
+        this.thumbnailUrlNew = thumbnailUrlNew;
     }
 
     // 썸네일 업데이트 (ALL)

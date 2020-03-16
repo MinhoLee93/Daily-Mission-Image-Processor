@@ -20,12 +20,12 @@ public class ImageResizeConsumer {
 
     @RabbitListener(queues = "q.resize.mission")
     @Caching(evict = {
-            // Home 미션 List
-            @CacheEvict(value = "missionLists", key = "'home'"),
-            // All 미션 List
-            @CacheEvict(value = "missionLists", key = "'all'"),
             // Hot 미션 List
             @CacheEvict(value = "missionLists", key = "'hot'"),
+            // New 미션 List
+            @CacheEvict(value = "missionLists", key = "'new'"),
+            // All 미션 List
+            @CacheEvict(value = "missionLists", key = "'all'"),
             // 미션 정보 (detail)
             @CacheEvict(value = "missions", key = "#message.missionId")
     })

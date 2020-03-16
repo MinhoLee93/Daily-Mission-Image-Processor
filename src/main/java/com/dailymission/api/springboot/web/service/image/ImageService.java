@@ -63,11 +63,11 @@ public class ImageService {
         File download = s3Util.download(messageDto);
         Image image = ImageIO.read(download);
 
-        // resize 300x400 (홈)
+        // resize 300x400 (Hot/New)
         File resize_300_400 = s3Util.resize(messageDto, image, 300, 400, "W");
         String resize_300_400_url =  s3Util.upload(resize_300_400, messageDto.getDirName()).getImageUrl();
 
-        // resize 300x480 (전체/핫)
+        // resize 300x480 (All)
         File resize_300_480 = s3Util.resize(messageDto, image, 300, 480, "W");
         String resize_300_480_url =  s3Util.upload(resize_300_480, messageDto.getDirName()).getImageUrl();
 
@@ -84,9 +84,9 @@ public class ImageService {
             Mission mission = optional.get();
 
             // update thumbnail url
-            mission.updateThumbnailHome(resize_300_400_url);
+            mission.updateThumbnailHot(resize_300_400_url);
+            mission.updateThumbnailNew(resize_300_400_url);
             mission.updateThumbnailAll(resize_300_480_url );
-            mission.updateThumbnailHot(resize_300_480_url);
             mission.updateThumbnailDetail(resize_400_600_url);
 
             missionRepository.save(mission);
