@@ -63,13 +63,13 @@ public class ImageService {
         File download = s3Util.download(messageDto);
         Image image = ImageIO.read(download);
 
-        // resize 300x350 (Hot/New)
+        // resize 300x350 (Hot/New/All)
         File resize_300_350 = s3Util.resize(messageDto, image, 300, 350, "W");
         String resize_300_350_url =  s3Util.upload(resize_300_350, messageDto.getDirName()).getImageUrl();
 
-        // resize 300x480 (All)
-        File resize_300_480 = s3Util.resize(messageDto, image, 300, 480, "W");
-        String resize_300_480_url =  s3Util.upload(resize_300_480, messageDto.getDirName()).getImageUrl();
+//        // resize 300x480 (All)
+//        File resize_300_480 = s3Util.resize(messageDto, image, 300, 480, "W");
+//        String resize_300_480_url =  s3Util.upload(resize_300_480, messageDto.getDirName()).getImageUrl();
 
         // resize 400x600 (디테일)
         File resize_400_600 = s3Util.resize(messageDto, image, 400, 600, "W");
@@ -86,7 +86,7 @@ public class ImageService {
             // update thumbnail url
             mission.updateThumbnailHot(resize_300_350_url);
             mission.updateThumbnailNew(resize_300_350_url);
-            mission.updateThumbnailAll(resize_300_480_url );
+            mission.updateThumbnailAll(resize_300_350_url);
             mission.updateThumbnailDetail(resize_400_600_url);
 
             missionRepository.save(mission);
@@ -102,6 +102,15 @@ public class ImageService {
         File resize_400_880 = s3Util.resize(messageDto, image, 400, 880, "W");
         String resize_400_880_url =  s3Util.upload(resize_400_880, messageDto.getDirName()).getImageUrl();
 
+        // resize 150x340 (My)
+        File resize_150_340 = s3Util.resize(messageDto, image, 150, 340, "W");
+        String resize_150_340_url =  s3Util.upload(resize_150_340, messageDto.getDirName()).getImageUrl();
+
+        // resize 400x880 (Mission)
+        File resize_300_360 = s3Util.resize(messageDto, image, 300, 360, "W");
+        String resize_300_360_url =  s3Util.upload(resize_300_360, messageDto.getDirName()).getImageUrl();
+
+
         // remove download file
         s3Util.removeNewFile(download);
 
@@ -112,6 +121,8 @@ public class ImageService {
 
             // update thumbnail url
             post.updateThumbnail(resize_400_880_url);
+            post.updateThumbnailMy(resize_150_340_url);
+            post.updateThumbnailMission(resize_300_360_url);
 
             postRepository.save(post);
         }
