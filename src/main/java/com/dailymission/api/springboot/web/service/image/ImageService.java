@@ -106,7 +106,7 @@ public class ImageService {
         File resize_150_340 = s3Util.resize(messageDto, image, 150, 340, "W");
         String resize_150_340_url =  s3Util.upload(resize_150_340, messageDto.getDirName()).getImageUrl();
 
-        // resize 400x880 (Mission)
+        // resize_300_360 (Mission)
         File resize_300_360 = s3Util.resize(messageDto, image, 300, 360, "W");
         String resize_300_360_url =  s3Util.upload(resize_300_360, messageDto.getDirName()).getImageUrl();
 
@@ -133,9 +133,13 @@ public class ImageService {
         File download = s3Util.download(messageDto);
         Image image = ImageIO.read(download);
 
-        // resize 40x40 (리스트)
+        // resize 40x40 (Profile)
         File resize_40_40 = s3Util.resize(messageDto, image, 40, 40, "W");
         String resize_40_40_url =  s3Util.upload(resize_40_40, messageDto.getDirName()).getImageUrl();
+
+        // resize 40x40 (User Info)
+        File resize_150_150 = s3Util.resize(messageDto, image, 150, 150, "W");
+        String resize_150_150_url =  s3Util.upload(resize_150_150, messageDto.getDirName()).getImageUrl();
 
         // remove download file
         s3Util.removeNewFile(download);
@@ -147,6 +151,7 @@ public class ImageService {
 
             // update thumbnail url
             user.updateThumbnail(resize_40_40_url);
+            user.updateThumbnailUserInfo(resize_150_150_url);
 
             userRepository.save(user);
         }
