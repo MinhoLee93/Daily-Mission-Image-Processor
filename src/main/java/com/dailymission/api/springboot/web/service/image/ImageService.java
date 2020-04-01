@@ -137,7 +137,7 @@ public class ImageService {
         File resize_40_40 = s3Util.resize(messageDto, image, 40, 40, "W");
         String resize_40_40_url =  s3Util.upload(resize_40_40, messageDto.getDirName()).getImageUrl();
 
-        // resize 40x40 (User Info)
+        // resize 150x150 (User Info)
         File resize_150_150 = s3Util.resize(messageDto, image, 150, 150, "W");
         String resize_150_150_url =  s3Util.upload(resize_150_150, messageDto.getDirName()).getImageUrl();
 
