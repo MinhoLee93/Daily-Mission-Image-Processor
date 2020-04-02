@@ -59,23 +59,23 @@ public class Mission extends BaseTimeEntity {
     @Column(name = "FILE_EXTENSION", nullable = false)
     private String fileExtension;
 
-    @Column(name="IMAGE_URL", nullable = false)
+    @Column(name="IMAGE_URL", nullable = false, length = 2000)
     private String imageUrl;
 
     // 썸네일 (Hot)
-    @Column(name="THUMBNAIL_URL_HOT", nullable = false)
+    @Column(name="THUMBNAIL_URL_HOT", nullable = false, length = 2000)
     private String thumbnailUrlHot;
 
     // 썸네일 (New)
-    @Column(name="THUMBNAIL_URL_New", nullable = false)
+    @Column(name="THUMBNAIL_URL_New", nullable = false, length = 2000)
     private String thumbnailUrlNew;
 
     // 썸네일 (All)
-    @Column(name="THUMBNAIL_URL_ALL", nullable = false)
+    @Column(name="THUMBNAIL_URL_ALL", nullable = false, length = 2000)
     private String thumbnailUrlAll;
 
     // 썸네일 (디테일)
-    @Column(name="THUMBNAIL_URL_DETAIL", nullable = false)
+    @Column(name="THUMBNAIL_URL_DETAIL", nullable = false, length = 2000)
     private String thumbnailUrlDetail;
 
     @Column(name = "CREDENTIAL", nullable = false)

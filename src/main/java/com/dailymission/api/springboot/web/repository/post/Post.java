@@ -34,16 +34,16 @@ public class Post extends BaseTimeEntity {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name="IMAGE_URL", nullable = false)
+    @Column(name="IMAGE_URL", nullable = false, length = 2000)
     private String imageUrl;
 
-    @Column(name="THUMBNAIL_URL", nullable = false)
+    @Column(name="THUMBNAIL_URL", nullable = false, length = 2000)
     private String thumbnailUrl;
 
-    @Column(name="THUMBNAIL_URL_MISSION", nullable = false)
+    @Column(name="THUMBNAIL_URL_MISSION", nullable = false, length = 2000)
     private String thumbnailUrlMission;
 
-    @Column(name="THUMBNAIL_URL_MY", nullable = false)
+    @Column(name="THUMBNAIL_URL_MY", nullable = false, length = 2000)
     private String thumbnailUrlMy;
 
     @Column(name = "DELETED")
